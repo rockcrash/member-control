@@ -1,0 +1,32 @@
+{% extends 'member/base.html' %}
+{% block content %}
+    <script>
+  $( function() {
+    $( "#id_birthday" ).datepicker({dateFormat: 'yy-mm-dd'});
+    $( "#id_joindate" ).datepicker({dateFormat: 'yy-mm-dd'});
+    $( "#id_recentdate" ).datepicker({dateFormat: 'yy-mm-dd'});
+  } );
+  </script>
+    <style type="text/css">
+    .my_table {border-spacing:0px; border:0px solid #000;}
+    .my_table td {padding:3px;}
+    .my_table th {padding:3px;}
+    </style>
+    <table class="my_table">
+     <tr>
+         <td></td>
+     </tr>
+    </table>
+   <form method="POST" class="sign-up-form">
+       {%csrf_token%}
+       <table align="center" class=my_table>
+       <th colspan="2"><h2 class="sub-title">회원 등록</h2></th>
+           {{ form.as_table }}
+       <th colspan="2" class="text-right">
+           <button type="submit" class="save btn btn-success">등록</button>
+           <a class="btn btn-danger" onclick="history.back()">취소</a>
+       </th>
+       </table>
+   </form>
+  </div>
+{% endblock %}

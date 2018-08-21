@@ -1,0 +1,29 @@
+{% extends 'member/base.html' %}
+{% block content %}
+  <div class="container">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <td><B>{% if field == "이름" and order == "오름차순" %}<a href="/회원/이름/내림차순/"><font color="black">이름▲</font></a>{% elif field == "이름" and order == "내림차순" %}<a href="/회원/이름/오름차순/"><font color="black">이름▼</font></a>{% else %}<a href="/회원/이름/오름차순/"><font color="black">이름</font></a>{% endif %}</B></td>
+          <td><B>{% if field == "성별" and order == "오름차순" %}<a href="/회원/성별/내림차순/"><font color="black">성별▲</font></a>{% elif field == "성별" and order == "내림차순" %}<a href="/회원/성별/오름차순/"><font color="black">성별▼</font></a>{% else %}<a href="/회원/성별/오름차순/"><font color="black">성별</font></a>{% endif %}</B></td>
+          <td><B>{% if field == "생일" and order == "오름차순" %}<a href="/회원/생일/내림차순/"><font color="black">생일▲</font></a>{% elif field == "생일" and order == "내림차순" %}<a href="/회원/생일/오름차순/"><font color="black">생일▼</font></a>{% else %}<a href="/회원/생일/오름차순/"><font color="black">생일</font></a>{% endif %}</B></td>
+          <td><B>{% if field == "거주지" and order == "오름차순" %}<a href="/회원/거주지/내림차순/"><font color="black">거주지▲</font></a>{% elif field == "거주지" and order == "내림차순" %}<a href="/회원/거주지/오름차순/"><font color="black">거주지▼</font></a>{% else %}<a href="/회원/거주지/오름차순/"><font color="black">거주지</font></a>{% endif %}</B></td>
+          <td><B>{% if field == "직장" and order == "오름차순" %}<a href="/회원/직장/내림차순/"><font color="black">직장▲</font></a>{% elif field == "직장" and order == "내림차순" %}<a href="/회원/직장/오름차순/"><font color="black">직장▼</font></a>{% else %}<a href="/회원/직장/오름차순/"><font color="black">직장</font></a>{% endif %}</B></td>
+          <td><B>{% if field == "가입일자" and order == "오름차순" %}<a href="/회원/가입일자/내림차순/"><font color="black">가입일자▲</font></a>{% elif field == "가입일자" and order == "내림차순" %}<a href="/회원/가입일자/오름차순/"><font color="black">가입일자▼</font></a>{% else %}<a href="/회원/가입일자/오름차순/"><font color="black">가입일자</font></a>{% endif %}</B></td>
+          <td><B>{% if field == "최근활동일자" and order == "오름차순" %}<a href="/회원/최근활동일자/내림차순/"><font color="black">최근활동일자▲</font></a>{% elif field == "최근활동일자" and order == "내림차순" %}<a href="/회원/최근활동일자/오름차순/"><font color="black">최근활동일자▼</font></a>{% else %}<a href="/회원/최근활동일자/오름차순/"><font color="black">최근활동일자</font></a>{% endif %}</B></td>{# <td><B>모임횟수</B></td> #}
+        </tr>
+      </thead>
+      <tbody>
+      {% for member in members %}<tr>
+          <td><B><a href="/회원/{{member.id}}/">{{member.name}}</a></B></td>
+          <td><B>{{member.gender}}</B></td>
+          <td><B>{{member.birthday}}</B></td>
+          <td><B>{{member.homeplace}}</B></td>
+          <td><B>{{member.workplace}}</B></td>
+          <td><B>{{member.joindate}}</B></td>
+          <td><B>{{member.recentdate}}</B></td>{# <td><B>{{member.times}}</B></td> #}
+        </tr>{% endfor %}
+      <tbody>
+    </table>
+    <a class="btn btn-primary pull-right" href="/회원/등록/" role="button">등록</a>
+{% endblock %}

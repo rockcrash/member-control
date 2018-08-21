@@ -1,0 +1,49 @@
+{% extends 'member/base.html' %}
+{% block content %}
+ <body>
+    <script>
+  $( function() {
+    $( "#id_birthday" ).datepicker({dateFormat: 'yy-mm-dd'});
+    $( "#id_joindate" ).datepicker({dateFormat: 'yy-mm-dd'});
+    $( "#id_recentdate" ).datepicker({dateFormat: 'yy-mm-dd'});
+  } );
+  </script>
+    <style type="text/css">
+    .my_table {border-spacing:0px; border:0px solid #000;}
+    .my_table td {padding:3px;}
+    .my_table th {padding:3px;}
+    </style>
+    <table class="my_table">
+     <tr>
+         <td></td>
+     </tr>
+    </table>
+   <form method="POST" class="member-info-form">
+       {%csrf_token%}
+       <table align="center" class=my_table>
+       <th colspan="2"><h2 class="sub-title">회원 정보</h2></th>
+           <tr><th><label for="id_name">이름:</label></th><td><input type="text" name="name" maxlength="10" required id="id_name" value="{{member.name}}" /></td></tr>
+<tr><th><label for="id_gender">성별:</label></th><td><select name="gender" id="id_gender">
+  <option value="남"{% if member.gender == "남" %} selected{% endif %}>남자</option>
+
+  <option value="여"{% if member.gender == "여" %} selected{% endif %}>여자</option>
+
+</select></td></tr>
+<tr><th><label for="id_birthday">생일:</label></th><td><input type="text" name="birthday" id="id_birthday" value="{{member.birthday}}" /></td></tr>
+<tr><th><label for="id_homeplace">거주지:</label></th><td><input type="text" name="homeplace" maxlength="15" id="id_homeplace" value="{{member.homeplace}}" /></td></tr>
+<tr><th><label for="id_workplace">직장:</label></th><td><input type="text" name="workplace" maxlength="15" id="id_workplace" value="{{member.workplace}}" /></td></tr>
+<tr><th><label for="id_favorite">좋아하는 영화:</label></th><td><input type="text" name="favorite" maxlength="25" id="id_favorite" value="{{member.favorite}}" /></td></tr>
+<tr><th><label for="id_introduction">자기소개:</label></th><td><textarea name="introduction" cols="40" rows="10" id="id_introduction">{{member.introduction}}</textarea></td></tr>
+<tr><th><label for="id_joindate">가입일:</label></th><td><input type="text" name="joindate" required id="id_joindate" value="{{member.joindate}}" /></td></tr>
+<tr><th><label for="id_recentdate">최근활동:</label></th><td><input type="text" name="recentdate" required id="id_recentdate" value="{{member.recentdate}}" /></td></tr>
+       <th class="text-left" height="30">
+           <a class="btn btn-default" href="/삭제/{{member.id}}/" onclick="if(!confirm('{{member.name}} 회원을 삭제하시겠습니까?')){return false;}" >삭제</a>
+       </th>
+       <th class="text-right" height="60">
+           <button type="submit" class="save btn btn-success">수정</button>
+           <a class="btn btn-danger" onclick="history.back()">취소</a>
+       </th>
+       </table>
+   </form>
+  </div>
+{% endblock %}
