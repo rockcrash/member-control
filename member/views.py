@@ -14,7 +14,7 @@ def index(request):
 
 @login_required(login_url='/로그인/')
 def memberlist(request):
-	members = Member.objects.all()
+	members = Member.objects.all().order_by('joindate')
 	for f in members:
 		if f.birthday == datetime.date(9999, 12, 31,):
 			f.birthday = ""
@@ -59,7 +59,7 @@ def memberlist_order(request, field, order):
 		else:
 			members = Member.objects.all().order_by('recentdate')
 	else:
-		members = Member.objects.all()
+		members = Member.objects.all().order_by('joindate')
 	for f in members:
 		if f.birthday == datetime.date(9999, 12, 31,):
 			f.birthday = ""
