@@ -18,11 +18,6 @@ def index(request):
 @login_required(login_url='/로그인/')
 def memberlist(request):
 	members = Member.objects.all().order_by('joindate')
-	for f in members:
-		if f.birthday == datetime.date(9999, 12, 31):
-			f.birthday = ""
-		if f.recentdate == datetime.date(1, 1, 1):
-			f.recentdate = "없음"
 
 	keyword = request.GET.get('키워드','')
 	if keyword:
@@ -46,6 +41,12 @@ def memberlist(request):
 		members = paginator.get_page(page)
 	else:
 		members = paginator.get_page('1')
+
+	for f in members:
+		if f.birthday == datetime.date(9999, 12, 31):
+			f.birthday = ""
+		if f.recentdate == datetime.date(1, 1, 1):
+			f.recentdate = "없음"
 
 	context = {'members':members}
 
@@ -102,11 +103,6 @@ def memberlist_order(request, field, order):
 			members = Member.objects.all().order_by('recentdate')
 	else:
 		members = Member.objects.all().order_by('joindate')
-	for f in members:
-		if f.birthday == datetime.date(9999, 12, 31,):
-			f.birthday = ""
-		if f.recentdate == datetime.date(1, 1, 1):
-			f.recentdate = "없음"
 	keyword = request.GET.get('키워드','')
 	if keyword:
 		members = members.filter(name__icontains=keyword)
@@ -129,6 +125,12 @@ def memberlist_order(request, field, order):
 		members = paginator.get_page(page)
 	else:
 		members = paginator.get_page('1')
+
+	for f in members:
+		if f.birthday == datetime.date(9999, 12, 31,):
+			f.birthday = ""
+		if f.recentdate == datetime.date(1, 1, 1):
+			f.recentdate = "없음"
 
 	context = {'members':members, 'field':field, 'order':order}
 
