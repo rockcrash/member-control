@@ -26,6 +26,7 @@ class RegistForm(forms.ModelForm):
         self.fields['workplace'].required = False
         self.fields['favorite'].required = False
         self.fields['introduction'].required = False
+        self.fields['recentdate'].required = False
 
 class SignupForm(UserCreationForm):
     first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), label="이름")

@@ -19,8 +19,10 @@ def index(request):
 def memberlist(request):
 	members = Member.objects.all().order_by('joindate')
 	for f in members:
-		if f.birthday == datetime.date(9999, 12, 31,):
+		if f.birthday == datetime.date(9999, 12, 31):
 			f.birthday = ""
+		if f.recentdate == datetime.date(1, 1, 1):
+			f.recentdate = "없음"
 
 	keyword = request.GET.get('키워드','')
 	if keyword:
@@ -103,6 +105,8 @@ def memberlist_order(request, field, order):
 	for f in members:
 		if f.birthday == datetime.date(9999, 12, 31,):
 			f.birthday = ""
+		if f.recentdate == datetime.date(1, 1, 1):
+			f.recentdate = "없음"
 	keyword = request.GET.get('키워드','')
 	if keyword:
 		members = members.filter(name__icontains=keyword)
@@ -139,7 +143,7 @@ def memberlist_order(request, field, order):
 
 	page_range = paginator.page_range[start_index:end_index]
 	context['page_range'] = page_range
-	
+
 	return render(request, 'member/memberlist_order.html', context)
 
 @login_required(login_url='/로그인/')
@@ -151,7 +155,7 @@ def memberinfo(request, id):
 		if form.is_valid():
 			post = form.save(commit = False)
 			if not post.birthday:
-				post.birthday="1111-11-11"
+				post.birthday="9999-12-31"
 			post.save()
 			return redirect('memlist')
 		else:
@@ -162,7 +166,10 @@ def memberinfo(request, id):
 		else:
 			member.birthday = "{}-{:02.0f}-{:02.0f}".format(member.birthday.year, member.birthday.month, member.birthday.day)
 		member.joindate = "{}-{:02.0f}-{:02.0f}".format(member.joindate.year, member.joindate.month, member.joindate.day)
-		member.recentdate = "{}-{:02.0f}-{:02.0f}".format(member.recentdate.year, member.recentdate.month, member.recentdate.day)
+		if member.recentdate == datetime.date(1,1,1):
+			member.recentdate = ""
+		else:		
+			member.recentdate = "{}-{:02.0f}-{:02.0f}".format(member.recentdate.year, member.recentdate.month, member.recentdate.day)
 		return render(request, 'member/memberinfo.html', {'member':member})
 
 @login_required(login_url='/로그인/')
@@ -173,6 +180,8 @@ def register(request):
 			post = form.save(commit = False)
 			if not post.birthday:
 				post.birthday="9999-12-31"
+			if not post.recentdate:
+				post.recentdate="0001-01-01"
 			post.save()
 			return redirect('memlist')
 		else:

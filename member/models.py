@@ -17,7 +17,7 @@ class Member(models.Model):
 	favorite = models.CharField(max_length=25)
 	introduction = models.TextField()
 	joindate = models.DateField(default=datetime.date.today, null=False)
-	recentdate = models.DateField(default=datetime.date.today, null=False)
+	recentdate = models.DateField(null=False)
 	times = models.IntegerField(default=0)
 	def __str__(self):
 		return self.name
