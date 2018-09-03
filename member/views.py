@@ -5,8 +5,11 @@ from django.contrib.auth.decorators import login_required
 from .forms import RegistForm, SignupForm
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.shortcuts import render
 import datetime
 
+DEF_CONTEXT_IN_PAGE = 25
 
 # Create your views here.
 def index(request):
@@ -18,7 +21,44 @@ def memberlist(request):
 	for f in members:
 		if f.birthday == datetime.date(9999, 12, 31,):
 			f.birthday = ""
+
+	keyword = request.GET.get('키워드','')
+	if keyword:
+		members = members.filter(name__icontains=keyword)
+
+	context_in_page = ''
+	if request.method == "POST":
+		context_in_page = request.POST.get('members_in_page','')
+		if context_in_page:
+			request.session['context_in_page'] = context_in_page
+
+	if not context_in_page:
+		context_in_page = request.session.get('context_in_page')
+
+	if not context_in_page:
+		request.session['context_in_page'] = DEF_CONTEXT_IN_PAGE
+		context_in_page = DEF_CONTEXT_IN_PAGE
+	paginator = Paginator(members, context_in_page)
+	page = request.GET.get('페이지','')
+	if page:
+		members = paginator.get_page(page)
+	else:
+		members = paginator.get_page('1')
+
 	context = {'members':members}
+
+	page_numbers_range = 5
+	max_index = len(paginator.page_range)
+	current_page = int(page) if page else 1
+
+	start_index = int((current_page - 1) / page_numbers_range) * page_numbers_range
+	end_index = start_index + page_numbers_range
+	if end_index >= max_index:
+		end_index = max_index
+
+	page_range = paginator.page_range[start_index:end_index]
+	context['page_range'] = page_range
+
 	return render(request, 'member/memberlist.html', context)
 
 @login_required(login_url='/로그인/')
@@ -63,7 +103,43 @@ def memberlist_order(request, field, order):
 	for f in members:
 		if f.birthday == datetime.date(9999, 12, 31,):
 			f.birthday = ""
+	keyword = request.GET.get('키워드','')
+	if keyword:
+		members = members.filter(name__icontains=keyword)
+
+	context_in_page = ''
+	if request.method == "POST":
+		context_in_page = request.POST.get('members_in_page','')
+		if context_in_page:
+			request.session['context_in_page'] = context_in_page
+
+	if not context_in_page:
+		context_in_page = request.session.get('context_in_page')
+
+	if not context_in_page:
+		request.session['context_in_page'] = DEF_CONTEXT_IN_PAGE
+		context_in_page = DEF_CONTEXT_IN_PAGE
+	paginator = Paginator(members, context_in_page)
+	page = request.GET.get('페이지','')
+	if page:
+		members = paginator.get_page(page)
+	else:
+		members = paginator.get_page('1')
+
 	context = {'members':members, 'field':field, 'order':order}
+
+	page_numbers_range = 5
+	max_index = len(paginator.page_range)
+	current_page = int(page) if page else 1
+
+	start_index = int((current_page - 1) / page_numbers_range) * page_numbers_range
+	end_index = start_index + page_numbers_range
+	if end_index >= max_index:
+		end_index = max_index
+
+	page_range = paginator.page_range[start_index:end_index]
+	context['page_range'] = page_range
+	
 	return render(request, 'member/memberlist_order.html', context)
 
 @login_required(login_url='/로그인/')

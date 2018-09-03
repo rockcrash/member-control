@@ -1,16 +1,28 @@
 {% extends 'member/base.html' %}
 {% block content %}
-  <div class="container">
+    <div class="text-right">
+      <form action="" method="POST">
+        {% csrf_token %}
+        <select name="members_in_page" id="id_members_in_page" onChange="this.form.submit()">
+          <option value="" selected disabled>페이지당 회원 수</option>
+          <option value="10">10</option>
+          <option value="20">25</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </form>
+      <p>
+    </div>
     <table class="table table-striped">
       <thead>
         <tr>
-          <td><B>{% if field == "이름" and order == "오름차순" %}<a href="/회원/이름/내림차순/"><font color="black">이름▲</font></a>{% elif field == "이름" and order == "내림차순" %}<a href="/회원/이름/오름차순/"><font color="black">이름▼</font></a>{% else %}<a href="/회원/이름/오름차순/"><font color="black">이름</font></a>{% endif %}</B></td>
-          <td><B>{% if field == "성별" and order == "오름차순" %}<a href="/회원/성별/내림차순/"><font color="black">성별▲</font></a>{% elif field == "성별" and order == "내림차순" %}<a href="/회원/성별/오름차순/"><font color="black">성별▼</font></a>{% else %}<a href="/회원/성별/오름차순/"><font color="black">성별</font></a>{% endif %}</B></td>
-          <td><B>{% if field == "생일" and order == "오름차순" %}<a href="/회원/생일/내림차순/"><font color="black">생일▲</font></a>{% elif field == "생일" and order == "내림차순" %}<a href="/회원/생일/오름차순/"><font color="black">생일▼</font></a>{% else %}<a href="/회원/생일/오름차순/"><font color="black">생일</font></a>{% endif %}</B></td>
-          <td><B>{% if field == "거주지" and order == "오름차순" %}<a href="/회원/거주지/내림차순/"><font color="black">거주지▲</font></a>{% elif field == "거주지" and order == "내림차순" %}<a href="/회원/거주지/오름차순/"><font color="black">거주지▼</font></a>{% else %}<a href="/회원/거주지/오름차순/"><font color="black">거주지</font></a>{% endif %}</B></td>
-          <td><B>{% if field == "직장" and order == "오름차순" %}<a href="/회원/직장/내림차순/"><font color="black">직장▲</font></a>{% elif field == "직장" and order == "내림차순" %}<a href="/회원/직장/오름차순/"><font color="black">직장▼</font></a>{% else %}<a href="/회원/직장/오름차순/"><font color="black">직장</font></a>{% endif %}</B></td>
-          <td><B>{% if field == "가입일자" and order == "오름차순" %}<a href="/회원/가입일자/내림차순/"><font color="black">가입일자▲</font></a>{% elif field == "가입일자" and order == "내림차순" %}<a href="/회원/가입일자/오름차순/"><font color="black">가입일자▼</font></a>{% else %}<a href="/회원/가입일자/오름차순/"><font color="black">가입일자</font></a>{% endif %}</B></td>
-          <td><B>{% if field == "최근활동일자" and order == "오름차순" %}<a href="/회원/최근활동일자/내림차순/"><font color="black">최근활동일자▲</font></a>{% elif field == "최근활동일자" and order == "내림차순" %}<a href="/회원/최근활동일자/오름차순/"><font color="black">최근활동일자▼</font></a>{% else %}<a href="/회원/최근활동일자/오름차순/"><font color="black">최근활동일자</font></a>{% endif %}</B></td>{# <td><B>모임횟수</B></td> #}
+          <td><B>{% if field == "이름" and order == "오름차순" %}<a href="/회원/이름/내림차순/{% if request.GET.키워드 or request.GET.페이지 %}?{% if request.GET.키워드 %}키워드={{request.GET.키워드}}{% endif %}{% if request.GET.키워드 and request.GET.페이지 %}&{% endif %}{% if request.GET.페이지 %}페이지={{request.GET.페이지}}{% endif %}{% endif %}"><font color="black">이름▲</font></a>{% elif field == "이름" and order == "내림차순" %}<a href="/회원/이름/오름차순/{% if request.GET.키워드 or request.GET.페이지 %}?{% if request.GET.키워드 %}키워드={{request.GET.키워드}}{% endif %}{% if request.GET.키워드 and request.GET.페이지 %}&{% endif %}{% if request.GET.페이지 %}페이지={{request.GET.페이지}}{% endif %}{% endif %}"><font color="black">이름▼</font></a>{% else %}<a href="/회원/이름/오름차순/{% if request.GET.키워드 or request.GET.페이지 %}?{% if request.GET.키워드 %}키워드={{request.GET.키워드}}{% endif %}{% if request.GET.키워드 and request.GET.페이지 %}&{% endif %}{% if request.GET.페이지 %}페이지={{request.GET.페이지}}{% endif %}{% endif %}"><font color="black">이름</font></a>{% endif %}</B></td>
+          <td><B>{% if field == "성별" and order == "오름차순" %}<a href="/회원/성별/내림차순/{% if request.GET.키워드 or request.GET.페이지 %}?{% if request.GET.키워드 %}키워드={{request.GET.키워드}}{% endif %}{% if request.GET.키워드 and request.GET.페이지 %}&{% endif %}{% if request.GET.페이지 %}페이지={{request.GET.페이지}}{% endif %}{% endif %}"><font color="black">성별▲</font></a>{% elif field == "성별" and order == "내림차순" %}<a href="/회원/성별/오름차순/{% if request.GET.키워드 or request.GET.페이지 %}?{% if request.GET.키워드 %}키워드={{request.GET.키워드}}{% endif %}{% if request.GET.키워드 and request.GET.페이지 %}&{% endif %}{% if request.GET.페이지 %}페이지={{request.GET.페이지}}{% endif %}{% endif %}"><font color="black">성별▼</font></a>{% else %}<a href="/회원/성별/오름차순/{% if request.GET.키워드 or request.GET.페이지 %}?{% if request.GET.키워드 %}키워드={{request.GET.키워드}}{% endif %}{% if request.GET.키워드 and request.GET.페이지 %}&{% endif %}{% if request.GET.페이지 %}페이지={{request.GET.페이지}}{% endif %}{% endif %}"><font color="black">성별</font></a>{% endif %}</B></td>
+          <td><B>{% if field == "생일" and order == "오름차순" %}<a href="/회원/생일/내림차순/{% if request.GET.키워드 or request.GET.페이지 %}?{% if request.GET.키워드 %}키워드={{request.GET.키워드}}{% endif %}{% if request.GET.키워드 and request.GET.페이지 %}&{% endif %}{% if request.GET.페이지 %}페이지={{request.GET.페이지}}{% endif %}{% endif %}"><font color="black">생일▲</font></a>{% elif field == "생일" and order == "내림차순" %}<a href="/회원/생일/오름차순/{% if request.GET.키워드 or request.GET.페이지 %}?{% if request.GET.키워드 %}키워드={{request.GET.키워드}}{% endif %}{% if request.GET.키워드 and request.GET.페이지 %}&{% endif %}{% if request.GET.페이지 %}페이지={{request.GET.페이지}}{% endif %}{% endif %}"><font color="black">생일▼</font></a>{% else %}<a href="/회원/생일/오름차순/{% if request.GET.키워드 or request.GET.페이지 %}?{% if request.GET.키워드 %}키워드={{request.GET.키워드}}{% endif %}{% if request.GET.키워드 and request.GET.페이지 %}&{% endif %}{% if request.GET.페이지 %}페이지={{request.GET.페이지}}{% endif %}{% endif %}"><font color="black">생일</font></a>{% endif %}</B></td>
+          <td><B>{% if field == "거주지" and order == "오름차순" %}<a href="/회원/거주지/내림차순/{% if request.GET.키워드 or request.GET.페이지 %}?{% if request.GET.키워드 %}키워드={{request.GET.키워드}}{% endif %}{% if request.GET.키워드 and request.GET.페이지 %}&{% endif %}{% if request.GET.페이지 %}페이지={{request.GET.페이지}}{% endif %}{% endif %}"><font color="black">거주지▲</font></a>{% elif field == "거주지" and order == "내림차순" %}<a href="/회원/거주지/오름차순/{% if request.GET.키워드 or request.GET.페이지 %}?{% if request.GET.키워드 %}키워드={{request.GET.키워드}}{% endif %}{% if request.GET.키워드 and request.GET.페이지 %}&{% endif %}{% if request.GET.페이지 %}페이지={{request.GET.페이지}}{% endif %}{% endif %}"><font color="black">거주지▼</font></a>{% else %}<a href="/회원/거주지/오름차순/{% if request.GET.키워드 or request.GET.페이지 %}?{% if request.GET.키워드 %}키워드={{request.GET.키워드}}{% endif %}{% if request.GET.키워드 and request.GET.페이지 %}&{% endif %}{% if request.GET.페이지 %}페이지={{request.GET.페이지}}{% endif %}{% endif %}"><font color="black">거주지</font></a>{% endif %}</B></td>
+          <td><B>{% if field == "직장" and order == "오름차순" %}<a href="/회원/직장/내림차순/{% if request.GET.키워드 or request.GET.페이지 %}?{% if request.GET.키워드 %}키워드={{request.GET.키워드}}{% endif %}{% if request.GET.키워드 and request.GET.페이지 %}&{% endif %}{% if request.GET.페이지 %}페이지={{request.GET.페이지}}{% endif %}{% endif %}"><font color="black">직장▲</font></a>{% elif field == "직장" and order == "내림차순" %}<a href="/회원/직장/오름차순/{% if request.GET.키워드 or request.GET.페이지 %}?{% if request.GET.키워드 %}키워드={{request.GET.키워드}}{% endif %}{% if request.GET.키워드 and request.GET.페이지 %}&{% endif %}{% if request.GET.페이지 %}페이지={{request.GET.페이지}}{% endif %}{% endif %}"><font color="black">직장▼</font></a>{% else %}<a href="/회원/직장/오름차순/{% if request.GET.키워드 or request.GET.페이지 %}?{% if request.GET.키워드 %}키워드={{request.GET.키워드}}{% endif %}{% if request.GET.키워드 and request.GET.페이지 %}&{% endif %}{% if request.GET.페이지 %}페이지={{request.GET.페이지}}{% endif %}{% endif %}"><font color="black">직장</font></a>{% endif %}</B></td>
+          <td><B>{% if field == "가입일자" and order == "오름차순" %}<a href="/회원/가입일자/내림차순/{% if request.GET.키워드 or request.GET.페이지 %}?{% if request.GET.키워드 %}키워드={{request.GET.키워드}}{% endif %}{% if request.GET.키워드 and request.GET.페이지 %}&{% endif %}{% if request.GET.페이지 %}페이지={{request.GET.페이지}}{% endif %}{% endif %}"><font color="black">가입일자▲</font></a>{% elif field == "가입일자" and order == "내림차순" %}<a href="/회원/가입일자/오름차순/{% if request.GET.키워드 or request.GET.페이지 %}?{% if request.GET.키워드 %}키워드={{request.GET.키워드}}{% endif %}{% if request.GET.키워드 and request.GET.페이지 %}&{% endif %}{% if request.GET.페이지 %}페이지={{request.GET.페이지}}{% endif %}{% endif %}"><font color="black">가입일자▼</font></a>{% else %}<a href="/회원/가입일자/오름차순/{% if request.GET.키워드 or request.GET.페이지 %}?{% if request.GET.키워드 %}키워드={{request.GET.키워드}}{% endif %}{% if request.GET.키워드 and request.GET.페이지 %}&{% endif %}{% if request.GET.페이지 %}페이지={{request.GET.페이지}}{% endif %}{% endif %}"><font color="black">가입일자</font></a>{% endif %}</B></td>
+          <td><B>{% if field == "최근활동일자" and order == "오름차순" %}<a href="/회원/최근활동일자/내림차순/{% if request.GET.키워드 or request.GET.페이지 %}?{% if request.GET.키워드 %}키워드={{request.GET.키워드}}{% endif %}{% if request.GET.키워드 and request.GET.페이지 %}&{% endif %}{% if request.GET.페이지 %}페이지={{request.GET.페이지}}{% endif %}{% endif %}"><font color="black">최근활동일자▲</font></a>{% elif field == "최근활동일자" and order == "내림차순" %}<a href="/회원/최근활동일자/오름차순/{% if request.GET.키워드 or request.GET.페이지 %}?{% if request.GET.키워드 %}키워드={{request.GET.키워드}}{% endif %}{% if request.GET.키워드 and request.GET.페이지 %}&{% endif %}{% if request.GET.페이지 %}페이지={{request.GET.페이지}}{% endif %}{% endif %}"><font color="black">최근활동일자▼</font></a>{% else %}<a href="/회원/최근활동일자/오름차순/{% if request.GET.키워드 or request.GET.페이지 %}?{% if request.GET.키워드 %}키워드={{request.GET.키워드}}{% endif %}{% if request.GET.키워드 and request.GET.페이지 %}&{% endif %}{% if request.GET.페이지 %}페이지={{request.GET.페이지}}{% endif %}{% endif %}"><font color="black">최근활동일자</font></a>{% endif %}</B></td>{# <td><B>모임횟수</B></td> #}
         </tr>
       </thead>
       <tbody>
@@ -25,5 +37,48 @@
         </tr>{% endfor %}
       <tbody>
     </table>
-    <a class="btn btn-primary pull-right" href="/회원/등록/" role="button">등록</a>
+    <table class="table-transparent">
+      <tr>
+        <td align=center>
+          <a class="btn btn-primary pull-right" href="/회원/등록/" role="button">등록</a>
+        </td>
+      </tr>
+      <tr>
+        <td align=center>
+      <ul class="pagination">{% if members.has_previous %}
+        <li>
+          <a href="?페이지={{ members.previous_page_number }}">
+            <span>Prev</span>
+          </a>
+        </li>{% else %}
+        <li class="disabled">
+          <a href="#">
+            <span>Prev</span>
+          </a>
+        </li>{% endif %}{% for page in page_range %}
+        <li {% if page == members.number %}class="active"{% endif %}>
+          <a href="?페이지={{ page }}">{{ page }}</a>
+        </li>{% endfor %}{% if members.has_next %}
+        <li>
+          <a href="?페이지={{ members.next_page_number }}">
+            <span>Next</span>
+          </a>
+        </li>{% else %}
+        <li {% if not members.has_next %}class="disabled"{% endif %}>
+          <a href="#">
+            <span>Next</span>
+          </a>
+        </li>{% endif %}
+    </ul>
+  </td>
+</tr>
+  <tr>
+    <td align=center>
+          <form action="" method="get">
+          <input type="text" name="키워드" value="{{ 키워드 }}">
+          <button class="btn btn-primary" type="submit">검색</button>
+          </form>
+        </td>
+      </tr>
+    </table>
 {% endblock %}
